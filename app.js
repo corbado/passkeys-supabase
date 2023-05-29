@@ -65,7 +65,7 @@ function syncDBWithRetry(attemptsLeft) {
     });
 }
 
-syncDBWithRetry(5); // Retry up to 5 times with 2-second intervals
+//syncDBWithRetry(5); // Retry up to 5 times with 2-second intervals
 
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
@@ -73,6 +73,6 @@ app.set("view engine", "ejs");
 app.use("/", authRoutes);
 app.use("/", webhookRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = 3000;
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
