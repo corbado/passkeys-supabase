@@ -1,5 +1,6 @@
 import * as UserService from "../services/userService.js";
 import { SDK, Configuration } from "@corbado/node-sdk";
+import * as TodoService from "../services/todoService.js";
 
 const projectID = process.env.PROJECT_ID;
 const apiSecret = process.env.API_SECRET;
@@ -23,16 +24,17 @@ export const profile = async (req, res) => {
   }
 
   try {
-    const user = await UserService.findByEmail(email);
+    const userId = await UserService.findByEmail(email);
+    const user = await UserService.findById(userId.id);
     console.log("FindById result: ", user);
     if (!user) {
       res.redirect("/logout");
     } else {
       TodoService.findByUserID(user.id).then((todos) => {
+        var todoText = "";
         if (todos.length == 0) {
           todoText = "No todos found";
         } else {
-          todoText = "";
           todos.forEach((todo) => {
             todoText += "ID: " + todo.id + ", Title: " + todo.Title + "\n";
           });
