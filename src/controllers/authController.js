@@ -4,6 +4,7 @@ import { SDK, Configuration } from "@corbado/node-sdk";
 const projectID = process.env.PROJECT_ID;
 const apiSecret = process.env.API_SECRET;
 const config = new Configuration(projectID, apiSecret);
+config.frontendAPI = "https://pro-5530967235591612107.auth.corbado.com";
 const corbado = new SDK(config);
 
 export const home = (req, res) => {
@@ -58,8 +59,11 @@ export const logout = (req, res) => {
 
 export const authRedirect = async (req, res) => {
   try {
+    console.log("Auth redirect");
     const { email, name } = await corbado.session.getCurrentUser(req);
+    console.log("User email: ", email);
     try {
+      console.log("Getting user by email: ", email);
       const user = await UserService.findByEmail(email);
       if (!user) {
         // Create new user
@@ -74,10 +78,12 @@ export const authRedirect = async (req, res) => {
         res.redirect("/profile");
       }
     } catch (err) {
+      console.log("500 error in auth redirect");
       console.error(err);
       res.status(500).send("Server Error");
     }
   } catch (err) {
+    console.log("401 error in auth redirect");
     res.status(401).json({});
   }
 };

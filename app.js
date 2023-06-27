@@ -6,7 +6,6 @@ import * as UserService from "./src/services/userService.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import { config as dotenvConfig } from "dotenv";
-import db from "./models/index.js";
 
 dotenvConfig();
 
@@ -28,22 +27,23 @@ const addTestUsers = async () => {
       }
 
       await UserService.create(
-          testUser.name,
-          testUser.email,
-          testUser.password
+        testUser.name,
+        testUser.email,
+        testUser.password
       );
       console.log(`Added test user: ${testUser.email}`);
     }
   } catch (error) {
     console.log("Error adding test users:", error);
   }
-}
+};
 
 const app = express();
 
 app.use(cookieParser());
 app.use(bodyParser.json());
 
+/*
 const syncDBWithRetry = (attemptsLeft) => {
   db.sequelize
       .sync()
@@ -64,6 +64,7 @@ const syncDBWithRetry = (attemptsLeft) => {
 }
 
 syncDBWithRetry(5); // Retry up to 5 times with 2-second intervals
+*/
 
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
@@ -71,6 +72,6 @@ app.set("view engine", "ejs");
 app.use("/", authRoutes);
 app.use("/", webhookRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

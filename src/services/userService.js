@@ -1,20 +1,19 @@
-import db from "../../models/index.js";
-import bcrypt from "bcryptjs";
+import { createClient } from "@supabase/supabase-js";
 
-const { createClient } = require("@supabase/supabase-js");
+import { config as dotenvConfig } from "dotenv";
+dotenvConfig();
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ROLE_KEY,
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  }
-);
+const supabaeUrl = process.env.SUPABASE_URL;
+const supabaseRoleKey = process.env.SUPABASE_ROLE_KEY;
 
-exports.create = async (username, userFullName, corbadoUserID) => {
+const supabase = createClient(supabaeUrl, supabaseRoleKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false,
+  },
+});
+
+export const create = async (username, userFullName, corbadoUserID) => {
   console.log("Creating new user with email: ", username);
   const { data, error } = await supabase.auth.admin.createUser({
     email: username,
@@ -32,7 +31,7 @@ exports.create = async (username, userFullName, corbadoUserID) => {
   }
 };
 
-exports.findByEmail = async (email) => {
+export const findByEmail = async (email) => {
   const { data, error } = await supabase.rpc("get_user_id_by_email", {
     email: email,
   });
@@ -53,7 +52,7 @@ exports.findByEmail = async (email) => {
   }
 };
 
-exports.findById = async (id) => {
+export const findById = async (id) => {
   console.log("Getting user by id: ", id);
   const { data, error } = await supabase.auth.admin.getUserById(id);
   if (error) {
