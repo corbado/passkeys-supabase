@@ -15,14 +15,25 @@
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <h1>Welcome!</h1>
+<script src="https://<%= process.env.PROJECT_ID %>.frontendapi.corbado.io/auth.js"></script>
+<corbado-auth-provider project-id="<%= process.env.PROJECT_ID %>">
 
-        <p>Email: <%= username %><br>
-            Name: <%= userFullName %></p>
+    <div slot="authed">
+        <div class="main-container">
+            <h1>Welcome!</h1>
 
-        <button type="button" onclick="document.location.href='/logout'">Logout</button>
+            <p>Email: <%= username %><br>
+                Name: <%= userFullName %></p>
 
+        </div>
+        <corbado-logout-handler
+                project-id="<%= process.env.PROJECT_ID %>"
+                redirect-url="/logout"
+        >
+            <button>Logout</button>
+        </corbado-logout-handler>
     </div>
+</corbado-auth-provider>
+
 </body>
 </html>
