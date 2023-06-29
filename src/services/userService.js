@@ -21,14 +21,11 @@ export const create = async (username, userFullName) => {
     email_confirm: true,
   });
   if (error) {
-    console.log("Error from create user:");
-    console.log(error.message);
+    console.log("Error from create user: ", error.message);
     return null;
-  } else {
-    console.log("Succes from create user:");
-    console.log(data);
-    return data;
   }
+  console.log(data);
+  return data;
 };
 
 export const findByEmail = async (email) => {
@@ -36,53 +33,41 @@ export const findByEmail = async (email) => {
     email: email,
   });
   if (error) {
-    console.log("Error from get_user_id_by_email:");
-    console.log(error.message);
+    console.log("Error from get_user_id_by_email: ", error.message);
     return null;
-  } else {
-    console.log("Succes from get_user_id_by_email:");
-    console.log(data);
-    if (data.length == 0) {
-      // No user found
-      return null;
-    } else {
-      const sub = data[0];
-      return sub;
-    }
   }
+  console.log(data);
+  if (data.length == 0) {
+    // No user found
+    return null;
+  }
+  const sub = data[0];
+  return sub.id;
 };
 
 export const findById = async (id) => {
-  console.log("Getting user by id: ", id);
   const { data, error } = await supabase.auth.admin.getUserById(id);
   if (error) {
-    console.log("Error from getUserById:");
-    console.log(error.message);
+    console.log("Error from getUserById: ", error.message);
     return null;
-  } else {
-    console.log("Succes from getUserById:");
-    console.log(data);
-    if (data.user == null) {
-      // No user found
-      return null;
-    } else {
-      return data.user;
-    }
   }
+  console.log(data);
+  if (data.user == null) {
+    // No user found
+    return null;
+  }
+  return data.user;
 };
 
 export const verifyPassword = async (email, password) => {
-  console.log("Verifying password for user: ", email);
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password,
   });
   if (error) {
-    console.log("Error from verifyPassword:");
-    console.log(error.message);
+    console.log("Error from verifyPassword: ", error.message);
     return null;
   }
-  console.log("Succes from verifyPassword:");
   console.log(data);
   return data;
 };

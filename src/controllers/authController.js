@@ -61,7 +61,6 @@ export const logout = (req, res) => {
 
 export const authRedirect = async (req, res) => {
   try {
-    console.log("Auth redirect");
     const { email, name } = await corbado.session.getCurrentUser(req);
     console.log("User email: ", email);
     try {
