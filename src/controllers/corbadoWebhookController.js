@@ -1,5 +1,6 @@
 import * as UserService from "../services/userService.js";
-import {Configuration, SDK} from '@corbado/node-sdk';
+import { Configuration, SDK } from "@corbado/node-sdk";
+import * as TodoService from "../services/todoService.js";
 import bcrypt from "bcryptjs";
 
 const projectID = process.env.PROJECT_ID;
@@ -8,8 +9,15 @@ const config = new Configuration(projectID, apiSecret);
 const corbado = new SDK(config);
 
 async function getUserStatus(username) {
-  const user = await UserService.findByEmail(username);
-  if (!user || user.password === null) {
+  console.log("Getting user status for user: ", username);
+  const id = await UserService.findByEmail(username);
+  console.log("User status: ", id);
+  if (!id) {
+    return "not_exists";
+  }
+  const user = await UserService.findById(id.id);
+  const isCorbadoUser = user.user_metadata.isCorbadoUser;
+  if (!user || isCorbadoUser) {
     return "not_exists";
   } else {
     return "exists";
@@ -17,12 +25,19 @@ async function getUserStatus(username) {
 }
 
 async function verifyPassword(username, password) {
+  console.log(
+    "Verifying password for user: ",
+    username,
+    " and password: ",
+    password
+  );
   try {
-    const user = await UserService.findByEmail(username);
-    if (!user) {
+    const res = await UserService.verifyPassword(username, password);
+    console.log("Verify password result: ", res);
+    if (!res) {
       return false;
     }
-    return await bcrypt.compare(password, user.password);
+    return true;
   } catch (error) {
     console.log(error);
     return false;

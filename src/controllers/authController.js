@@ -69,9 +69,9 @@ export const authRedirect = async (req, res) => {
       const user = await UserService.findByEmail(email);
       if (!user) {
         // Create new user
-        console.log("Creating new user with email: ", username);
-        UserService.create(username, userFullName, userID).then((user) => {
-          console.log("User created: ", user);
+        console.log("Creating new user with email: ", email);
+        UserService.create(email, name).then((u) => {
+          console.log("User created: ", u);
           res.redirect("/profile");
         });
       } else {

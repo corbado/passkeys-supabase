@@ -13,11 +13,11 @@ const supabase = createClient(supabaeUrl, supabaseRoleKey, {
   },
 });
 
-export const create = async (username, userFullName, corbadoUserID) => {
+export const create = async (username, userFullName) => {
   console.log("Creating new user with email: ", username);
   const { data, error } = await supabase.auth.admin.createUser({
     email: username,
-    user_metadata: { name: userFullName, corbadoId: corbadoUserID },
+    user_metadata: { name: userFullName, isCorbadoUser: true },
     email_confirm: true,
   });
   if (error) {
@@ -69,4 +69,20 @@ export const findById = async (id) => {
       return data.user;
     }
   }
+};
+
+export const verifyPassword = async (email, password) => {
+  console.log("Verifying password for user: ", email);
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email,
+    password: password,
+  });
+  if (error) {
+    console.log("Error from verifyPassword:");
+    console.log(error.message);
+    return null;
+  }
+  console.log("Succes from verifyPassword:");
+  console.log(data);
+  return data;
 };
