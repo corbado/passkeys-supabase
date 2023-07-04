@@ -26,12 +26,16 @@ export const profile = async (req, res) => {
     if (!userId) {
       // Create new user
       UserService.create(email, name).then((u) => {
-        const user = u.user;
-        res.render("pages/profile", {
-          username: user.email,
-          userFullName: user.user_metadata.name,
-          supabaseID: user.id,
-        });
+        if (u == null) {
+          res.redirect("/logout");
+        } else {
+          const user = u.user;
+          res.render("pages/profile", {
+            username: user.email,
+            userFullName: user.user_metadata.name,
+            supabaseID: user.id,
+          });
+        }
       });
     } else {
       // User already exists
