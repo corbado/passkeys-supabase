@@ -58,7 +58,7 @@ docker compose up
 
 ## 3. Usage
 
-After step 2.3. your local server should be fully working.
+After step 2.2. your local server should be fully working.
 
 ### 3.1. Test authentication
 
