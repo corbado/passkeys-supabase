@@ -23,7 +23,6 @@ export const profile = async (req, res) => {
   try {
     const { email, name } = await corbado.session.getCurrentUser(req);
     console.log("User email: ", email);
-    console.log("Getting user by email: ", email);
     const userId = await UserService.findIdByEmail(email);
     if (!userId) {
       // Create new user
@@ -50,7 +49,6 @@ export const profile = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log("500 error in auth redirect");
     console.error(err);
     res.status(500).send("Server Error");
   }
