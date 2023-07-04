@@ -32,25 +32,29 @@ Also head over to [Supabase](https://supabase.com) to create and configure a pro
 
 Use the values you obtained above to configure the following variables inside `.env`:
 
-1. **PROJECT_ID**: The project ID.
-2. **API_SECRET**: The API secret.
-3. **WEBHOOK_USERNAME**=”webhookUsername”
-4. **WEBHOOK_PASSWORD**=”webhookPassword”
+1. **PROJECT_ID**=""
+2. **API_SECRET**=""
+3. **CLI_SECRET**=""
 
-5. **SUPABASE_URL**=””
-6. **SUPABASE_ROLE_KEY**=””
-7. **SUPABASE_JWT_SECRET**=”“
-8. **SUPABASE_API_KEY**=””
+4. **WEBHOOK_USERNAME**=”webhookUsername”
+5. **WEBHOOK_PASSWORD**=”webhookPassword”
 
-### 2.2. Run the Node application
+6. **SUPABASE_URL**=””
+7. **SUPABASE_ROLE_KEY**=””
+8. **SUPABASE_JWT_SECRET**=”“
+9. **SUPABASE_API_KEY**=””
 
-**Note:** Before continuing, please ensure you have Node.js installed and accessible from your shell.
+### 2.2. Start Docker containers
+
+**Note:** Before continuing, please ensure you have [Docker](https://www.docker.com/products/docker-desktop/) installed and accessible from your shell.
 
 Use the following command to start the system:
 
 ```
-npm install && npm start
+docker compose up
 ```
+
+**Note:** Please wait until all containers are ready. This can take some time.
 
 ## 3. Usage
 
@@ -58,6 +62,6 @@ After step 2.3. your local server should be fully working.
 
 ### 3.1. Test authentication
 
-If you now visit `http://localhost:3000`, you should be forwarded to the `/login` page.
+If you now visit `http://localhost:19915`, you should be forwarded to the `/login` page.
 
 When authenticated you will be forwarded to the `/profile` page.
