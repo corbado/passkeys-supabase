@@ -24,7 +24,6 @@ const getSupabaseClient = (userID) => {
 };
 
 export const findByUserID = async (userID) => {
-  console.log("Requesting todos from table todos2 with user id: ", userID);
   const { data, error } = await getSupabaseClient(userID)
     .from("todos2")
     .select();

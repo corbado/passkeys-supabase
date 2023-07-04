@@ -14,7 +14,6 @@ const supabase = createClient(supabaseUrl, supabaseRoleKey, {
 });
 
 export const create = async (username, userFullName) => {
-  console.log("Creating new user with email: ", username);
   const { data, error } = await supabase.auth.admin.createUser({
     email: username,
     user_metadata: { name: userFullName, isCorbadoUser: true },
