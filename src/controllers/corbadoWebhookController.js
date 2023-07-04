@@ -1,7 +1,5 @@
 import * as UserService from "../services/userService.js";
 import { Configuration, SDK } from "@corbado/node-sdk";
-import * as TodoService from "../services/todoService.js";
-import bcrypt from "bcryptjs";
 
 const projectID = process.env.PROJECT_ID;
 const apiSecret = process.env.API_SECRET;
@@ -10,12 +8,12 @@ const corbado = new SDK(config);
 
 async function getUserStatus(username) {
   console.log("Getting user status for user: ", username);
-  const id = await UserService.findByEmail(username);
+  const id = await UserService.findIdByEmail(username);
   console.log("User status: ", id);
   if (!id) {
     return "not_exists";
   }
-  const user = await UserService.findById(id.id);
+  const user = await UserService.findById(id);
   const isCorbadoUser = user.user_metadata.isCorbadoUser;
   if (!user || isCorbadoUser) {
     return "not_exists";

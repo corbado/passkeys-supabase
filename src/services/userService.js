@@ -3,10 +3,10 @@ import { createClient } from "@supabase/supabase-js";
 import { config as dotenvConfig } from "dotenv";
 dotenvConfig();
 
-const supabaeUrl = process.env.SUPABASE_URL;
+const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseRoleKey = process.env.SUPABASE_ROLE_KEY;
 
-const supabase = createClient(supabaeUrl, supabaseRoleKey, {
+const supabase = createClient(supabaseUrl, supabaseRoleKey, {
   auth: {
     autoRefreshToken: false,
     persistSession: false,
@@ -28,7 +28,7 @@ export const create = async (username, userFullName) => {
   return data;
 };
 
-export const findByEmail = async (email) => {
+export const findIdByEmail = async (email) => {
   const { data, error } = await supabase.rpc("get_user_id_by_email", {
     email: email,
   });

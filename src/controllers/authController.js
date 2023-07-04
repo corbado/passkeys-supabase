@@ -16,7 +16,7 @@ export const login = (req, res) => {
   res.render("pages/login");
 };
 
-export const profile = async (req, res) => {
+export const profileOld = async (req, res) => {
   const { authenticated, email } = await corbado.session.getCurrentUser(req);
 
   if (!authenticated) {
@@ -24,29 +24,17 @@ export const profile = async (req, res) => {
   }
 
   try {
-    const userId = await UserService.findByEmail(email);
-    const user = await UserService.findById(userId.id);
+    const userId = await UserService.findIdByEmail(email);
+    const user = await UserService.findById(userId);
     console.log("FindById result: ", user);
     if (!user) {
       res.redirect("/logout");
     } else {
-      TodoService.findByUserID(user.id).then((todos) => {
-        var todoText = "";
-        if (todos.length == 0) {
-          todoText = "No todos found";
-        } else {
-          todos.forEach((todo) => {
-            todoText += "ID: " + todo.id + ", Title: " + todo.Title + "\n";
-          });
-        }
-
-        res.render("pages/profile", {
-          username: user.email,
-          userFullName: user.user_metadata.name,
-          supabaseID: user.id,
-          corbadoID: user.user_metadata.corbadoId,
-          todos: todoText,
-        });
+      res.render("pages/profile", {
+        username: user.email,
+        userFullName: user.user_metadata.name,
+        supabaseID: user.id,
+        corbadoID: user.user_metadata.corbadoId,
       });
     }
   } catch (err) {
@@ -59,13 +47,50 @@ export const logout = (req, res) => {
   res.redirect("/");
 };
 
+export const profile = async (req, res) => {
+  try {
+    const { email, name } = await corbado.session.getCurrentUser(req);
+    console.log("User email: ", email);
+    console.log("Getting user by email: ", email);
+    const userId = await UserService.findIdByEmail(email);
+    if (!userId) {
+      // Create new user
+      console.log("Creating new user with email: ", email);
+      UserService.create(email, name).then((u) => {
+        const user = u.user;
+        console.log("User created: ", user);
+        res.render("pages/profile", {
+          username: user.email,
+          userFullName: user.user_metadata.name,
+          supabaseID: user.id,
+          corbadoID: user.user_metadata.corbadoId,
+        });
+      });
+    } else {
+      // User already exists
+      console.log("User found: ", userId);
+      const user = await UserService.findById(userId);
+      res.render("pages/profile", {
+        username: user.email,
+        userFullName: user.user_metadata.name,
+        supabaseID: user.id,
+        corbadoID: user.user_metadata.corbadoId,
+      });
+    }
+  } catch (err) {
+    console.log("500 error in auth redirect");
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+};
+
 export const authRedirect = async (req, res) => {
   try {
     const { email, name } = await corbado.session.getCurrentUser(req);
     console.log("User email: ", email);
     try {
       console.log("Getting user by email: ", email);
-      const user = await UserService.findByEmail(email);
+      const user = await UserService.findIdByEmail(email);
       if (!user) {
         // Create new user
         console.log("Creating new user with email: ", email);
