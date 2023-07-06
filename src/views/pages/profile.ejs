@@ -18,23 +18,21 @@
 
 <body>
     <script src="https://<%= process.env.PROJECT_ID %>.frontendapi.corbado.io/auth.js"></script>
-    <corbado-auth-provider project-id="<%= process.env.PROJECT_ID %>">
 
-        <div slot="authed">
-            <div class="main-container">
-                <h1>Welcome!</h1>
+    <div slot="authed">
+        <div class="main-container">
+            <h1>Welcome!</h1>
 
-                <p>Email: <%= username %><br>
-                        Name: <%= userFullName %><br>
-                            SupabaseID: <%= supabaseID %><br>
-                </p>
+            <p>Email: <%= username %><br>
+                    Name: <%= userFullName %><br>
+                        SupabaseID: <%= supabaseID %><br>
+            </p>
 
-            </div>
-            <corbado-logout-handler project-id="<%= process.env.PROJECT_ID %>" redirect-url="/logout">
-                <button>Logout</button>
-            </corbado-logout-handler>
         </div>
-    </corbado-auth-provider>
+        <corbado-logout-handler project-id="<%= process.env.PROJECT_ID %>" redirect-url="/logout">
+            <button>Logout</button>
+        </corbado-logout-handler>
+    </div>
 
 </body>
 
