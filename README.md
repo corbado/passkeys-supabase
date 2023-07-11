@@ -7,20 +7,22 @@ users are integrated using Corbado webhooks while new users are saved without a 
 
 ## 1. File structure
 
+```
 ├── app.js
 ├── .env
 ├── src
-| ├── controllers
-| | ├── authController.js # renders views and uses Corbado SDK for sessions
-| | ├── corbadoWebhookController.js # Takes all requests belonging to the Corbado webhook logic
-| ├── routes
-| | ├── authRoutes.js # All routes belonging to certain views
-| | ├── corbadoWebhookRoutes.js # All routes belonging to the Corbado webhook
-| ├── services
-| | ├── userService.js # Communicates with Supabase
-| ├── views
-| | ├── login.ejs # Login page with the webcomponent
-| | ├── profile.ejs # Profile page showing user info
+|   ├── controllers
+|   |   ├── authController.js           # renders views and uses Corbado SDK for sessions
+|   |   └── corbadoWebhookController.js # Takes all requests belonging to the Corbado webhook logic
+|   ├── routes
+|   |   ├── authRoutes.js               # All routes belonging to certain views
+|   |   └── corbadoWebhookRoutes.js     # All routes belonging to the Corbado webhook
+|   ├── services
+|   |   └── userService.js              # Communicates with Supabase
+|   ├── views
+|   |   ├── login.ejs                   # Login page with the webcomponent
+|   |   └── profile.ejs                 # Profile page showing user info
+```
 
 ## 2. Setup
 
