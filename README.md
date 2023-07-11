@@ -26,11 +26,19 @@ users are integrated using Corbado webhooks while new users are saved without a 
 
 ## 2. Setup
 
-### 2.1. Configure environment variables
+### 2.1. Configure Corbado project
 
-Please follow steps 1-3 on our [Getting started](https://docs.corbado.com/overview/getting-started) page to create and configure a project in the [developer panel](https://app.corbado.com).
+Please follow steps 1-4 on our [Getting started](https://docs.corbado.com/overview/getting-started) page to create and configure a project in the [developer panel](https://app.corbado.com). Use `http://localhost:19915` as origin in step 4.
+
+Next, follow steps 4-6 on our [Web component guide](https://docs.corbado.com/integrations/web-component#4.-define-application-url) and set the application URL to `http://localhost:19915/login`, the redirect URL to `http://localhost:19915/profile` and the relying party ID to `localhost`.
+
+In the [integration mode settings](https://app.corbado.com/app/settings/integration-mode), make sure you have selected `Webcomponent` under Integration and `Yes` under User base.
+
+Lastly, configure the [webhooks](https://app.corbado.com/app/settings/webhooks) as seen in the image:
 
 Also head over to [Supabase](https://supabase.com) to create and configure a project using their web interface.
+
+### 2.2. Configure environment variables
 
 Use the values you obtained above to configure the following variables inside `.env`:
 
@@ -42,9 +50,8 @@ Use the values you obtained above to configure the following variables inside `.
 5. **WEBHOOK_PASSWORD**=”webhookPassword”
 
 6. **SUPABASE_URL**=””
-7. **SUPABASE_ROLE_KEY**=””
+7. **SUPABASE_API_KEY_SERVICE_ROLE**=””
 8. **SUPABASE_JWT_SECRET**=”“
-9. **SUPABASE_API_KEY**=””
 
 ### 2.2. Start Docker containers
 

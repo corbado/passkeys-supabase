@@ -4,7 +4,7 @@ import { SDK, Configuration } from "@corbado/node-sdk";
 const projectID = process.env.PROJECT_ID;
 const apiSecret = process.env.API_SECRET;
 const config = new Configuration(projectID, apiSecret);
-config.frontendAPI = "https://pro-5530967235591612107.auth.corbado.com";
+config.frontendAPI = "https://" + projectID + ".auth.corbado.com";
 const corbado = new SDK(config);
 
 export const home = (req, res) => {
