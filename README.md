@@ -35,14 +35,37 @@ Next, follow steps 4-6 on our [Web component guide](https://docs.corbado.com/int
 In the [integration mode settings](https://app.corbado.com/app/settings/integration-mode), make sure you have selected `Webcomponent` under Integration and `Yes` under User base.
 
 Lastly, configure the [webhooks](https://app.corbado.com/app/settings/webhooks) as seen in the image:
+<img width="1245" alt="image" src="https://github.com/corbado/example-webcomponent-supabase/assets/23581140/5c39a731-2232-442b-9227-74c295d5f1ea">
 
-Also head over to [Supabase](https://supabase.com) to create and configure a project using their web interface.
 
-### 2.2. Configure environment variables
+### 2.2. Create Supabase project
 
-Use the values you obtained above to configure the following variables inside `.env`:
+Head over to [Supabase](https://supabase.com) to create a project using their web interface.
 
-1. **PROJECT_ID**=""
+Next, go to the SQL Editor and execute the following query:
+
+```
+CREATE OR REPLACE FUNCTION get_user_id_by_email(email TEXT)
+RETURNS TABLE (id uuid)
+SECURITY definer
+AS $$
+BEGIN
+  RETURN QUERY SELECT au.id FROM auth.users au WHERE au.email = $1;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+Feel free to create some password-based users in the ```Authentication > Users``` page. Remember to set autoconfirm to true!
+
+### 2.3. Configure environment variables
+
+We now need to configure the following variables inside `.env`:
+
+Project ID as well as API secret shall be used from step 2.1.
+The CLI secret is located [here](https://app.corbado.com/app/settings/credentials/cli-secret).
+Your Supabase credentials can be found at ```Settings > API``` inside the Supabase dashboard.
+
+1. **PROJECT_ID**=""          
 2. **API_SECRET**=""
 3. **CLI_SECRET**=""
 
@@ -53,7 +76,8 @@ Use the values you obtained above to configure the following variables inside `.
 7. **SUPABASE_API_KEY_SERVICE_ROLE**=””
 8. **SUPABASE_JWT_SECRET**=”“
 
-### 2.2. Start Docker containers
+
+### 2.4. Start Docker containers
 
 **Note:** Before continuing, please ensure you have [Docker](https://www.docker.com/products/docker-desktop/) installed and accessible from your shell.
 
@@ -67,7 +91,7 @@ docker compose up
 
 ## 3. Usage
 
-After step 2.2. your local server should be fully working.
+After step 2. your local server should be fully working.
 
 ### 3.1. Test authentication
 
