@@ -4,7 +4,7 @@ import { config as dotenvConfig } from "dotenv";
 dotenvConfig();
 
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseRoleKey = process.env.SUPABASE_ROLE_KEY;
+const supabaseRoleKey = process.env.SUPABASE_API_KEY_SERVICE_ROLE;
 
 const supabase = createClient(supabaseUrl, supabaseRoleKey, {
   auth: {
