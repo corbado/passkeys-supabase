@@ -27,8 +27,8 @@ export const create = async (username, userFullName) => {
   return data;
 };
 
-export const findIdByEmail = async (email) => {
-  const { data, error } = await supabase.rpc("get_user_id_by_email", {
+export const findByEmail = async (email) => {
+  var { data, error } = await supabase.rpc("get_user_id_by_email", {
     email: email,
   });
   if (error) {
@@ -40,12 +40,8 @@ export const findIdByEmail = async (email) => {
     // No user found
     return null;
   }
-  const sub = data[0];
-  return sub.id;
-};
-
-export const findById = async (id) => {
-  const { data, error } = await supabase.auth.admin.getUserById(id);
+  const id = data[0].id;
+  var { data, error } = await supabase.auth.admin.getUserById(id);
   if (error) {
     console.log("Error from getUserById: ", error.message);
     return null;

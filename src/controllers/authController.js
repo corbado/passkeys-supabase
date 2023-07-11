@@ -4,6 +4,7 @@ import { SDK, Configuration } from "@corbado/node-sdk";
 const projectID = process.env.PROJECT_ID;
 const apiSecret = process.env.API_SECRET;
 const config = new Configuration(projectID, apiSecret);
+config.frontendAPI = "https://pro-5530967235591612107.auth.corbado.com";
 const corbado = new SDK(config);
 
 export const home = (req, res) => {
@@ -21,7 +22,8 @@ export const logout = (req, res) => {
 export const profile = async (req, res) => {
   try {
     const { email, name } = await corbado.session.getCurrentUser(req);
-    const userId = await UserService.findIdByEmail(email);
+    const user = await UserService.findByEmail(email);
+    const userId = user?.id;
     if (!userId) {
       // Create new user
       UserService.create(email, name).then((u) => {
@@ -38,7 +40,6 @@ export const profile = async (req, res) => {
       });
     } else {
       // User already exists
-      const user = await UserService.findById(userId);
       res.render("pages/profile", {
         username: user.email,
         userFullName: user.user_metadata.name,

@@ -7,12 +7,9 @@ const config = new Configuration(projectID, apiSecret);
 const corbado = new SDK(config);
 
 async function getUserStatus(username) {
-  const id = await UserService.findIdByEmail(username);
-  if (!id) {
-    return "not_exists";
-  }
-  const user = await UserService.findById(id);
-  const isCorbadoUser = user.user_metadata.isCorbadoUser;
+  const user = await UserService.findByEmail(username);
+  const isCorbadoUser = user != null && user.user_metadata.isCorbadoUser;
+
   if (!user || isCorbadoUser) {
     return "not_exists";
   } else {
