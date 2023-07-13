@@ -19,7 +19,7 @@ users are integrated using Corbado webhooks while new users are saved without a 
 |   |   └── corbadoWebhookRoutes.js     # All routes belonging to the Corbado webhook
 |   ├── services
 |   |   └── userService.js              # Communicates with Supabase
-|   ├── views
+|   ├── views/pages
 |   |   ├── login.ejs                   # Login page with the webcomponent
 |   |   └── profile.ejs                 # Profile page showing user info
 ```
