@@ -44,7 +44,7 @@ Head over to [Supabase](https://supabase.com) to create a project using their we
 
 Next, go to the SQL Editor and execute the following query:
 
-```
+```SQL
 CREATE OR REPLACE FUNCTION get_user_id_by_email(email TEXT)
 RETURNS TABLE (id uuid)
 SECURITY definer
