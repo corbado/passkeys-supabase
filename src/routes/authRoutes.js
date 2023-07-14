@@ -1,16 +1,15 @@
-const express = require('express');
+import express from "express";
+import { home, login, profile, logout } from "../controllers/authController.js";
+
 const router = express.Router();
-const authController = require("../controllers/authController");
 
 // home page
-router.get('/', authController.home);
+router.get("/", home);
 // login page
-router.get('/login', authController.login);
+router.get("/login", login);
 // user profile page
-router.get('/profile', authController.profile);
+router.get("/profile", profile);
 // logout page
-router.get('/logout', authController.logout);
-// redirect URL for corbado auth
-router.get('/api/sessionToken', authController.authRedirect);
+router.get("/logout", logout);
 
-module.exports = router;
+export default router;

@@ -1,65 +1,102 @@
-# Complete integration sample for the Corbado web component in Node.js
-This is a sample implementation of frontend and backend where the Corbado web component is integrated.
+# Complete integration sample for the Corbado web component in Node.js with existing users in Supabase
+
+This is a sample implementation of frontend and backend where the Corbado web component is integrated. The database provider is Supabase, an open-source Firebase alternative which already contains several password-based users. These
+users are integrated using Corbado webhooks while new users are saved without a password.
 
 **Note:** In this tutorial a customer system is created with some pre-existing password-based users. Have a look at our [docs](https://docs.corbado.com/integrations/web-component/no-existing-user-base) to see the integration if you don't have any users yet.
 
 ## 1. File structure
-        ├── ...
-        ├── .env                                     # Environment variables for the application
-        ├── app.js                                   # Starting point for the application
-        ├── config      
-        │   └── config.js                            # Configuration file for the MySQL database
-        ├── models      
-        │   └── user.model.js                        # Defines user model
-        ├── src                             
-        │   ├── controllers                  
-        │   │   ├── authController.js                # Manages requests for authentication
-        │   │   └── corbadoWebhookConroller.js       # Manages requests for Corbado webhook
-        │   ├── routes                  
-        │   │   ├── authRoutes.js                    # Manages endpoints for authentication
-        │   │   └── corbadoWebhookRoutes.js          # Manages endpoints for Corbado webhook
-        │   ├── services                  
-        │   │   └── userService.js                   # Manages logic for user
-        │   └── views
-        │       └── pages
-        │           ├── login.ejs                    # Login page view contains Corbado web component
-        │           └── profile.ejs                  # Profile page view
-        └── ...
+
+```
+├── app.js
+├── .env
+├── src
+|   ├── controllers
+|   |   ├── authController.js           # renders views and uses Corbado SDK for sessions
+|   |   └── corbadoWebhookController.js # Takes all requests belonging to the Corbado webhook logic
+|   ├── routes
+|   |   ├── authRoutes.js               # All routes belonging to certain views
+|   |   └── corbadoWebhookRoutes.js     # All routes belonging to the Corbado webhook
+|   ├── services
+|   |   └── userService.js              # Communicates with Supabase
+|   ├── views/pages
+|   |   ├── login.ejs                   # Login page with the webcomponent
+|   |   └── profile.ejs                 # Profile page showing user info
+```
 
 ## 2. Setup
 
-### 2.1. Configure environment variables
-Please follow steps 1-3 on our [Getting started](https://docs.corbado.com/overview/getting-started) page to create and configure a project in the [developer panel](https://app.corbado.com).
+### 2.1. Configure Corbado project
 
-Use the values you obtained above to configure the following variables inside `.env`:
-1. **PROJECT_ID**: The project ID.
-2. **API_SECRET**: The API secret.
-3. **CLI_SECRET** The CLI secret.
+Please follow steps 1-4 on our [Getting started](https://docs.corbado.com/overview/getting-started) page to create and configure a project in the [Corbado developer panel](https://app.corbado.com). Use `http://localhost:19915` as origin in step 4.
 
-### 2.2. Start Docker containers
+Next, follow steps 4-6 on our [Web component guide](https://docs.corbado.com/integrations/web-component#4.-define-application-url) and set the Application URL to `http://localhost:19915/login`, the Redirect URL to `http://localhost:19915/profile` and the Relying Party ID to `localhost`.
+
+In the [integration mode settings](https://app.corbado.com/app/settings/integration-mode), make sure you have selected `Web component` as integration mode and selected `Yes` as existing user base.
+
+Lastly, configure the [webhooks](https://app.corbado.com/app/settings/webhooks) as seen in the image:
+<img width="1245" alt="image" src="https://github.com/corbado/example-webcomponent-supabase/assets/23581140/5c39a731-2232-442b-9227-74c295d5f1ea">
+
+
+### 2.2. Create Supabase project
+
+Head over to [Supabase](https://supabase.com) to create a project using the Supabase web interface.
+
+Next, go to the SQL Editor and execute the following query:
+
+```SQL
+CREATE OR REPLACE FUNCTION get_user_id_by_email(email TEXT)
+RETURNS TABLE (id uuid)
+SECURITY definer
+AS $$
+BEGIN
+  RETURN QUERY SELECT au.id FROM auth.users au WHERE au.email = $1;
+END;
+$$ LANGUAGE plpgsql;
+```
+If everything has worked fine, you should see the following success message
+
+`Success. No rows returned`
+
+Feel free to create some password-based users in the ```Authentication > Users``` page. Then, click on the button "Add user" in the top right. Remember to set autoconfirm to true!
+
+### 2.3. Configure environment variables
+
+We now need to configure the following variables inside `.env`:
+
+Project ID as well as API secret shall be used from step 2.1.
+The CLI secret is located [here](https://app.corbado.com/app/settings/credentials/cli-secret).
+Your Supabase credentials can be found at ```Project Settings > API``` inside the Supabase dashboard.
+
+```
+PROJECT_ID=
+API_SECRET=
+CLI_SECRET=
+
+WEBHOOK_USERNAME="webhookUsername"
+WEBHOOK_PASSWORD="webhookPassword"
+
+SUPABASE_URL=
+SUPABASE_API_KEY_SERVICE_ROLE=
+SUPABASE_JWT_SECRET=
+```
+
+### 2.4. Start Docker containers
 
 **Note:** Before continuing, please ensure you have [Docker](https://www.docker.com/products/docker-desktop/) installed and accessible from your shell.
 
 Use the following command to start the system:
+
 ```
 docker compose up
 ```
-**Note:** Please wait until all containers are ready. This can take some time. 
+
+**Note:** Please wait until all containers are ready. This can take some time.
 
 ## 3. Usage
 
-After step 2.3. your local server should be fully working.
-
-### 3.1. Test authentication
+After step 2.4. your local server should be fully working.
 
 If you now visit `http://localhost:19915`, you should be forwarded to the `/login` page.
-
-You can login with one of the existing accounts or sign-up yourself.
-
-| Name | Email | Password |
-| --- | --- | --- |
-| demo_user | demo_user@company.com | demo12 |
-| max | max@company.com | maxPW |
-| john | john@company.com | 123456 |
 
 When authenticated you will be forwarded to the `/profile` page.
