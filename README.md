@@ -58,7 +58,7 @@ If everything has worked fine, you should see the following success message
 
 `Success. No rows returned`
 
-Feel free to create some password-based users in the ```Authentication > Users``` page. Remember to set autoconfirm to true!
+Feel free to create some password-based users in the ```Authentication > Users``` page. Then, click on the button "Add user" in the top right. Remember to set autoconfirm to true!
 
 ### 2.3. Configure environment variables
 
