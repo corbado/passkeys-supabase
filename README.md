@@ -65,17 +65,18 @@ Project ID as well as API secret shall be used from step 2.1.
 The CLI secret is located [here](https://app.corbado.com/app/settings/credentials/cli-secret).
 Your Supabase credentials can be found at ```Settings > API``` inside the Supabase dashboard.
 
-1. **PROJECT_ID**=""          
-2. **API_SECRET**=""
-3. **CLI_SECRET**=""
+```
+PROJECT_ID=
+API_SECRET=
+CLI_SECRET=
 
-4. **WEBHOOK_USERNAME**=”webhookUsername”
-5. **WEBHOOK_PASSWORD**=”webhookPassword”
+WEBHOOK_USERNAME="webhookUsername"
+WEBHOOK_PASSWORD="webhookPassword"
 
-6. **SUPABASE_URL**=””
-7. **SUPABASE_API_KEY_SERVICE_ROLE**=””
-8. **SUPABASE_JWT_SECRET**=”“
-
+SUPABASE_URL=
+SUPABASE_API_KEY_SERVICE_ROLE=
+SUPABASE_JWT_SECRET=
+```
 
 ### 2.4. Start Docker containers
 
