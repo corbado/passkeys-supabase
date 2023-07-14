@@ -66,7 +66,7 @@ We now need to configure the following variables inside `.env`:
 
 Project ID as well as API secret shall be used from step 2.1.
 The CLI secret is located [here](https://app.corbado.com/app/settings/credentials/cli-secret).
-Your Supabase credentials can be found at ```Settings > API``` inside the Supabase dashboard.
+Your Supabase credentials can be found at ```Project Settings > API``` inside the Supabase dashboard.
 
 ```
 PROJECT_ID=
