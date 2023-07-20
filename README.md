@@ -35,7 +35,8 @@ Next, follow steps 4-6 on our [Web component guide](https://docs.corbado.com/int
 In the [integration mode settings](https://app.corbado.com/app/settings/integration-mode), make sure you have selected `Web component` as integration mode and selected `Yes` as existing user base.
 
 Lastly, configure the [webhooks](https://app.corbado.com/app/settings/webhooks) as seen in the image:
-<img width="1245" alt="image" src="https://github.com/corbado/example-webcomponent-supabase/assets/23581140/5c39a731-2232-442b-9227-74c295d5f1ea">
+<img width="1238" alt="webhooks" src="https://github.com/corbado/passkeys-supabase/assets/23581140/2d158756-ddd3-4c21-b266-f88596a8add2">
+
 
 
 ### 2.2. Create Supabase project
