@@ -28,11 +28,9 @@ users are integrated using Corbado webhooks while new users are saved without a 
 
 ### 2.1. Configure Corbado project
 
-Please follow steps 1-4 on our [Getting started](https://docs.corbado.com/overview/getting-started) page to create and configure a project in the [Corbado developer panel](https://app.corbado.com). Use `http://localhost:19915` as origin in step 4.
+Please follow the steps on our [Getting started](https://docs.corbado.com/overview/getting-started) page to create and configure a project in the [Corbado developer panel](https://app.corbado.com). Use `http://localhost:19915` as origin.
 
-Next, follow steps 4-6 on our [Web component guide](https://docs.corbado.com/integrations/web-component#4.-define-application-url) and set the Application URL to `http://localhost:19915/login`, the Redirect URL to `http://localhost:19915/profile` and the Relying Party ID to `localhost`.
-
-In the [integration mode settings](https://app.corbado.com/app/settings/integration-mode), make sure you have selected `Web component` as integration mode and selected `Yes` as existing user base.
+Next, follow steps 4-6 on our [Web component guide](https://docs.corbado.com/integrations/web-component) and set the Application URL to `http://localhost:19915/login`, the Redirect URL to `http://localhost:19915/profile` and the Relying Party ID to `localhost`.
 
 Lastly, configure the [webhooks](https://app.corbado.com/app/settings/webhooks) as seen in the image:
 <img width="1238" alt="webhooks" src="https://github.com/corbado/passkeys-supabase/assets/23581140/2d158756-ddd3-4c21-b266-f88596a8add2">
